@@ -1,2 +1,3 @@
 # react_bmhH5
 爆米花站点react框架搭建
+原有站点由原生js编撰webpack配置及打包，后期维护及增加功能非常困难，现自主改为react框架
