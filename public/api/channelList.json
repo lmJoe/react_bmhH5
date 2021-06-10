@@ -1,0 +1,5 @@
+{
+  "code":1,
+  "success":true,
+  "data":[{"id": "100", "channel":"推荐"},{"id": "999", "channel":"疫情关注"}, {"id": "124", "channel":"新时代"}, {"id": "101", "channel":"娱乐"}, {"id": "3", "channel":"搞笑"}, {"id": "20", "channel":"奇闻"}, {"id": "105", "channel":"美女"}, {"id": "133", "channel":"小视频"}, {"id": "21", "channel":"游戏"}, {"id": 2, "channel":"歌舞"}, {"id": "13", "channel":"汽车"}, {"id": "14", "channel":"时尚"}, {"id": "107", "channel":"历史"}, {"id": "112", "channel":"乐活"},{"id": "108", "channel":"科技"}]
+}
