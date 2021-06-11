@@ -7,7 +7,12 @@ export const NavList = styled.div`
   width:100%;
   height: 1.1rem;
   border-bottom:1px solid #f0f0f0;
-  position:relative;
+  // position:relative;
+  position:fixed;
+  top:1.1rem;
+  left:0;
+  z-index:500;
+  background:#fff;
 `
 export const NavSwiper = styled.div`
 
@@ -43,7 +48,7 @@ export const VideoPage = styled.div`
   width: 100%;
   text-align: left;
   background-color: #fff;
-  margin-top:1.1rem;
+  margin-top:2.2rem;
 `
 export const VideoList = styled.div`
   width: 100%;

@@ -1,0 +1,20 @@
+{
+  "status":0,
+  "data":{
+    "ClassID":17,
+    "ClassIDTwo":0,
+    "ClassName":"游戏",
+    "CompanyName":"李海",
+    "CoverImgs":"http://img04.video.baomihua.com/x/49579620.jpg",
+    "Description":"往日不再：与莎拉前往火山顶部营地不料被敌人抓住，这场景用心了",
+    "Duration":499,
+    "HeadImg":"https://img.baomihua.com/v1/head/74cb74b8e02d4e4f8305892acff627de.jpg",
+    "Tags":"科普,教程,泛知识,往日不再,单机游戏",
+    "Title":"往日不再：与莎拉前往火山顶部营地不料被敌人抓住，这场景用心了",
+    "UploadTime":"2021-06-09T09:49:05",
+    "UserID":61691952,
+    "UserName":"年华热游",
+    "Video_ID":49579620
+  },
+  "msg":"success"
+}

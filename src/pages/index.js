@@ -1,25 +1,32 @@
 import React,{ PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { HomeWrapper } from './style';
+import { DtailPage} from './style';
 import {actionCreators} from './store';
+import Video from './components/video'
+import GuessLikeList from './components/guessLike'
 class Detail extends PureComponent {
   render() {
     // console.log(this.props.location.search);
     const {title,content} = this.props;
     return (
-      <div>
-        详情页
-      </div>
+      <DtailPage>
+        <Video />
+        <GuessLikeList />
+      </DtailPage>
     )
   }
   componentDidMount() {
     this.props.getDetail(this.props.match.params.id);
+    this.props.getGuessVideo(this.props.match.params.id);
   }
 }
 const mapDispatch = (dispatch) =>({
   getDetail(id){
     
+  },
+  getGuessVideo(videoid){
+    dispatch(actionCreators.getGuessVideo(videoid))
   }
 })
 const mapState = (state) => ({

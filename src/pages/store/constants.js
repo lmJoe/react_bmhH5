@@ -1,1 +1,2 @@
-export const CHANGE_DETAIL = 'home/CHANGE_DETAIL';
+export const DETAIL_VIDEOINFO = 'pages/DETAIL_VIDEOINFO';
+export const GUESS_VIDEO = 'pages/GUESS_VIDEO';
