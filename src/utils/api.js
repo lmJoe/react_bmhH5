@@ -25,6 +25,28 @@ function getChannelList(){
   }) 
 }
 /**
+ * 获取播放页评论列表
+ */
+ function getCommendList(){
+  return new Promise((resolve, reject) => {
+    http({
+      //这里是你自己的请求方式、url和data参数
+      method: 'GET',
+      url:baseURL+'/api/commend.json',
+      data: {},
+      //假设后台需要的是表单数据这里你就可以更改
+      headers: {
+        "Content-Type":"application/json",
+      }
+    }).then(function (res) {
+      resolve (res);
+    }).catch(function (error) {
+      console.log("网络异常~",error);
+      reject(error)
+    });
+  }) 
+}
+/**
  * 获取首页视频列表
  */
 function getVideoList(){
@@ -135,5 +157,6 @@ export {
   getChannelList,
   getVideoList,
   getVideoInfo,
-  getGuessVideoList
+  getGuessVideoList,
+  getCommendList
 }

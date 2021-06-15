@@ -14,7 +14,7 @@ class GuessPage extends PureComponent {
   render() {
     // console.log(this.props.location.search);
     const { guessVideoList } = this.props;
-    const guessVideoNum = getRandomArrayElements(guessVideoList,10);
+    const guessVideoNum = guessVideoList.slice(0,4)
     console.log("guessVideoNum",guessVideoNum);
     return (
       <GuessLike>

@@ -5,6 +5,8 @@ import { DtailPage} from './style';
 import {actionCreators} from './store';
 import Video from './components/video'
 import GuessLikeList from './components/guessLike'
+import RelevantDation from './components/relevantDation'
+import CommentModule from './components/commentModule'
 class Detail extends PureComponent {
   render() {
     // console.log(this.props.location.search);
@@ -13,12 +15,16 @@ class Detail extends PureComponent {
       <DtailPage>
         <Video />
         <GuessLikeList />
+        <RelevantDation />
+        <CommentModule />
       </DtailPage>
     )
   }
   componentDidMount() {
-    this.props.getDetail(this.props.match.params.id);
-    this.props.getGuessVideo(this.props.match.params.id);
+    this.props.getDetail(this.props.match.params.id);//获取播放页视频详情
+    this.props.getGuessVideo(this.props.match.params.id);//获取播放页猜你喜欢store数据
+    this.props.getRecommend();//获取播放页相关推荐store数据
+    this.props.getCommend();//获取详情页评论tore数据
   }
 }
 const mapDispatch = (dispatch) =>({
@@ -27,6 +33,12 @@ const mapDispatch = (dispatch) =>({
   },
   getGuessVideo(videoid){
     dispatch(actionCreators.getGuessVideo(videoid))
+  },
+  getRecommend(){
+    dispatch(actionCreators.getRecommend())
+  },
+  getCommend(){
+    dispatch(actionCreators.getCommend())
   }
 })
 const mapState = (state) => ({
