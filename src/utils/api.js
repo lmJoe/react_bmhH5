@@ -1,5 +1,6 @@
 import {http,jsonp} from '../utils/http';
-let baseURL = 'http://192.168.30.10:3000'////正式环境
+let baseURL = 'http://192.168.30.10:3000'//正式环境
+// let baseURL = 'http://test-static01.baomihua.com/liming2'//正式环境
 let baseURL1 = 'https://interface.video.baomihua.com/'//正式环境
 let baseURL2 = 'https://push-common.baomihua.com:8081/';//正式环境
 /**
@@ -118,7 +119,7 @@ function getVideoInfo(videoid){
       data:params,
       timeout: 30000,
       dataType: "jsonp",
-      jsonp:'jsoncallback',
+      jsonp:'zepto',
       jsonpcallback:'ok',
       success: function (data) {
         resolve (data);

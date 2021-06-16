@@ -70,16 +70,18 @@ class SwiperVideo extends PureComponent {
                     </div>  
                   </Link>
                   <div className="video-list-item-tools">
-                    <div className="video-list-item-author">
-                      <div className="video-list-item-author-avatar">
-                        <img src={item.get('appPic')} />
-                        <span className="v-tag yellow"></span>
+                    <Link key={index} to={'/author/'+item.get('appID')}>
+                      <div className="video-list-item-author">
+                        <div className="video-list-item-author-avatar">
+                          <img src={item.get('appPic')} />
+                          <span className="v-tag yellow"></span>
+                        </div>
+                        <div className="video-list-item-author-nickname">
+                          <p>{item.get('appName')}</p>
+                          <div className="item-author-msg">{item.get('companyName')}</div>
+                        </div>
                       </div>
-                      <div className="video-list-item-author-nickname">
-                        <p>{item.get('appName')}</p>
-                        <div className="item-author-msg">{item.get('companyName')}</div>
-                      </div>
-                    </div>
+                    </Link>
                     <div className="video-list-item-btns">
                       <div className="video-list-item-btns-comment video-icon-btn-comment">
                         <img src={sayicon} />

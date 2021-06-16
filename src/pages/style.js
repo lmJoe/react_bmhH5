@@ -881,3 +881,33 @@ export const CommentOpenapp = styled.div`
   align-items: center;
   justify-content: center;
 `
+export const OpenAppBottom = styled.div`
+  display: flex;
+  width: 100%;
+  height: 1.594rem;
+  padding: 0 .362rem 0 .169rem;
+  justify-content: space-between;
+`
+export const OpenAppBottomLogo = styled.div`
+  width: 3.333rem;
+  height: .99rem;
+  margin-top: .266rem;
+  line-height: 1.5rem;
+  margin-left: 0.2rem;
+  img{
+    max-width: 1.986rem;
+    min-width: 3.333rem;
+  }
+`
+export const OpenappBottomOpen = styled.div`
+  width: 1.981rem;
+  height: .676rem;
+  line-height: .676rem;
+  text-align: center;
+  margin-top: .411rem;
+  font-family: PingFangSC-Medium;
+  font-size: .338rem;
+  color: #fff;
+  border-radius: .193rem;
+  background-image: linear-gradient(55deg,#ff4141,#ff6031)
+`

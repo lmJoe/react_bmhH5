@@ -335,7 +335,7 @@ export const Video = styled.div`
     }
   }
   .video-list-item-tools{
-    height: 1.063rem;
+    height: 1.3rem;
     background-color: #f5f5f5;
     display: -webkit-box;
     display: -ms-flexbox;

@@ -10,6 +10,10 @@ const defaultState = fromJS({
   videoImg:'',
   totaltime:'',
   userid:'',
+  host:'',
+  dir:'',
+  stream_name:'',
+  videofiletype:'',
   guessVideoList:[],
   recommendVideoList:[],
   commendList:[],
@@ -24,6 +28,10 @@ const setVideoInfo = (state,action) => {
     videoImg:fromJS(action.videoImg),
     totaltime:fromJS(action.totaltime),
     userid:fromJS(action.userid),
+    host:fromJS(action.host),
+    dir:fromJS(action.dir),
+    stream_name:fromJS(action.stream_name),
+    videofiletype:fromJS(action.videofiletype),
   });
 }
 const setGuessList = (state,action) => {

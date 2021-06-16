@@ -4,9 +4,11 @@ import { withRouter } from 'react-router-dom';
 import { DtailPage} from './style';
 import {actionCreators} from './store';
 import Video from './components/video'
+import logoImg from '../statics/header-logo.jpg';
 import GuessLikeList from './components/guessLike'
 import RelevantDation from './components/relevantDation'
 import CommentModule from './components/commentModule'
+import { OpenAppBottom,OpenAppBottomLogo,OpenappBottomOpen} from './style';
 class Detail extends PureComponent {
   render() {
     // console.log(this.props.location.search);
@@ -17,6 +19,12 @@ class Detail extends PureComponent {
         <GuessLikeList />
         <RelevantDation />
         <CommentModule />
+        <OpenAppBottom>
+          <OpenAppBottomLogo>
+            <img src={logoImg} />
+          </OpenAppBottomLogo>
+          <OpenappBottomOpen>打开</OpenappBottomOpen>
+        </OpenAppBottom>
       </DtailPage>
     )
   }

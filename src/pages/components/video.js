@@ -30,14 +30,16 @@ import {actionCreators} from '../store';
 class Video extends PureComponent {
   render() {
     // console.log(this.props.location.search);
-    const {title,videoUrl,videoImg,userid,totaltime} = this.props;
+    const {title,videoUrl,videoImg,userid,totaltime,videoPlayBtn,host,dir,stream_name,videofiletype} = this.props;
+    const source = 'http://' + host + '/' + dir + '/' + stream_name + '.' + videofiletype;
+    console.log("播放地址",source,videoUrl)
     return (
       <VideoPage>
         <VideoDetail>
           <VideoContainer className="video-container">
-            <video src={'http:'+videoUrl} className="video" />
+            <video src={source} className="video" id="video" playsInline="" x5-video-player-type="h5-page" controls="controls" autoPlay="autoPlay"/>
           </VideoContainer>
-          <VideoPlayerShade>
+          <VideoPlayerShade onClick ={() => videoPlayBtn()}>
             <ShadeStyle>
               <img src={videoImg.replace('x', '640_360')} />
               <PlayBtn></PlayBtn>
@@ -47,7 +49,7 @@ class Video extends PureComponent {
               <BottomBg></BottomBg>
             </ShadeStyle >
           </VideoPlayerShade>
-          <VideoPlayerPause>
+          {/* <VideoPlayerPause>
             <img src={videoImg.replace('x', '640_360')} />
             <VideoPlayerPauseContainer>
               <div>
@@ -58,7 +60,7 @@ class Video extends PureComponent {
                 </VideoPlayerPauseBtns>
               </div>
             </VideoPlayerPauseContainer>
-          </VideoPlayerPause>
+          </VideoPlayerPause> */}
         </VideoDetail>
         <OpenApptop>
           <OpenAppopBanner>
@@ -89,6 +91,9 @@ class Video extends PureComponent {
 const mapDispatch = (dispatch) =>({
   getVideoDetail(videoid){
     dispatch(actionCreators.getVideoDetail(videoid))
+  },
+  videoPlayBtn(){
+    console.log("播放")
   }
 })
 const mapState = (state) => ({
@@ -97,6 +102,10 @@ const mapState = (state) => ({
   videoImg:state.getIn(['pages','videoImg']),
   userid:state.getIn(['pages','userid']),
   totaltime:state.getIn(['pages','totaltime']),
+  host:state.getIn(['pages','host']),
+  dir:state.getIn(['pages','dir']),
+  stream_name:state.getIn(['pages','stream_name']),
+  videofiletype:state.getIn(['pages','videofiletype']),
 })
 //此处withRouter使用意义为让detail有能力获取到withRouter中所有的参数和内容
 export default connect(mapState,mapDispatch)(withRouter(Video));

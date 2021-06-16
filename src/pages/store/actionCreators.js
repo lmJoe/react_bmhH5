@@ -10,6 +10,10 @@ const setVideoInfo = (data) => ({
   "videoImg":fromJS(data.video_img),
   "totaltime":fromJS(data.totaltime),
   "userid":fromJS(data.userid),
+  "host":fromJS(data.host),
+  "dir":fromJS(data.dir),
+  "stream_name":fromJS(data.stream_name),
+  "videofiletype":fromJS(data.videofiletype),
 })
 const setGuessVideo = (data) => ({
   "type":constants.GUESS_VIDEO,
