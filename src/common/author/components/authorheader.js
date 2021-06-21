@@ -2,6 +2,11 @@ import React,{ PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import share from '../../../statics/share.png';
+import bottom from '../../../statics/bottom.png';
+import top from '../../../statics/top.png';
+import Intro from '../../../statics/Intro.png';
+import vImg from '../../../statics/v.png';
+import headImg from '../../../statics/headImg.jpg';
 import { 
   Header,
   Profile,
@@ -22,8 +27,8 @@ class AuthorHeader extends PureComponent {
       <Header>
         <Profile>
           <LeftBox>
-            <img className="photo" src="" />
-            <img className="fork" src="" />
+            <img className="photo" src={headImg} />
+            <img className="fork" src={vImg} />
           </LeftBox>
           <RightBox>
             <Works>
@@ -47,18 +52,21 @@ class AuthorHeader extends PureComponent {
           <div className="hidden">
             <span className="authentication-text" id="authTxt">
               <img className="certification-img" src="" />
+              好看视频认证：
             </span>
           </div>
           <div className="outer-line">
             <span className="authentication-text overflowEllipsis">
-              <img className="certification-img" src="" />
+              <img className="certification-img" src={vImg} />
+              好看视频认证：
+              未来计划签约作者,优质体育领域创作者
             </span>
-            <img className="detail-arrow-img-down" src="" />
-            <img className="detail-arrow-img-up" src="" />
+            <img className="detail-arrow-img-down" src={bottom} />
+            <img className="detail-arrow-img-up" src={top} />
           </div>
           <div className="outer-line">
-            <img className="profile-img" src="" />
-            <span className="overflowEllipsis"></span>
+            <img className="profile-img" src={Intro} />
+            <span className="overflowEllipsis">爱山爱水爱古风更爱太极</span>
           </div>
         </Wishes>
       </Header>

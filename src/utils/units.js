@@ -9,7 +9,16 @@ function getRandomArrayElements(arr, count) {
   }
   return shuffled.slice(min);
 }
-
+function getRandomNum(minnum, maxnum, n){ //随机数
+  var choice = maxnum - minnum + 1;
+  var num = Math.floor(Math.random() * choice + minnum);
+  if (n === num) {
+    return getRandomNum(minnum, maxnum, n)
+  } else {
+    return num
+  }
+}
 export {
-  getRandomArrayElements
+  getRandomArrayElements,
+  getRandomNum
 }

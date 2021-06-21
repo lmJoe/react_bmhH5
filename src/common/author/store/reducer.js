@@ -6,6 +6,18 @@ const videodefaultState = fromJS({
   videoList:[],
   channelList:[],
   channelid:100,//设置默认频道id
+  authorTabList:[
+    {
+      id:1,
+      name:'视频'
+    },{
+      id:2,
+      name:'小视频'
+    },{
+      id:3,
+      name:'合辑'
+    }
+  ]
 })
 //reducer文件导出的内容是一个纯函数（给一个固定的输入就一定会有一定的输出，同时不会有副作用）
 export default ( state = videodefaultState, action ) => {//此处的defaultState是一个默认值

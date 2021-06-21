@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 export const AuthorPage = styled.div`
+  
+`
+export const BodyWrapper = styled.div`
+  padding-bottom: 45px;
+  box-sizing: border-box;
+  padding-bottom: 1.208rem;
+`
+export const Header = styled.div`
   margin-top:1.1rem;
   border-top: 1px solid #f3f3f3;
   border-bottom: .145rem solid #f3f3f3;
@@ -10,9 +18,6 @@ export const AuthorPage = styled.div`
   background-size: contain;
   transition: all .5s;
   transition-timing-function: ease-in-out;
-`
-export const Header = styled.div`
-
 `
 export const Profile = styled.div`
   width: 100%;
@@ -99,10 +104,97 @@ export const Nick = styled.div`
 export const Wishes = styled.div`
   position: relative;
   width: 100%;
+  
+  .certification-img{
+    width: .386rem;
+    height: .338rem;
+    margin: .113rem .129rem 0 0;
+  }
+  .profile-img{
+    width: .386rem;
+    height: .322rem;
+    margin-top: .113rem;
+  }
+  
+  .detail-arrow-img-down{
+    width: .338rem;
+    height: .338rem;
+    margin-top: .137rem;
+  }
+  .detail-arrow-img-up{
+    width: .338rem;
+    height: .338rem;
+    margin-top: .137rem;
+    display: none;
+  }
   span{
     line-height: .628rem;
     display: inline-block;
     font-family: PingFangSC-Regular;
     font-size: .338rem;
+  }
+  .hidden{
+    visibility: hidden;
+    width: 100%;
+    position: absolute;
+    left: -80.507rem;
+    top: -80.507rem;
+    .authentication-text{
+      padding-left: 0;
+    }
+  }
+  .outer-line{
+    display: flex;
+    height: .628rem;
+    overflow: hidden;
+  }
+  .overflowEllipsis{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`
+export const TabsWrapper = styled.ul`
+  position: relative;
+  width: 100%;
+  height: 1.353rem;
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  li{
+    width: 3.333rem;
+    height: 1.353rem;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: PingFangSC-Regular;
+    font-size: .435rem;
+    text-align: center;
+    line-height: 1.063rem;
+    color: #888;
+    list-style-type: none;
+  }
+  .active{
+    font-weight: 700;
+    font-family: PingFangSC-Semibold;
+    color: #000;
+    span{
+      position: relative;
+      &:after{
+        position: absolute;
+        top: .85rem;
+        left: 50%;
+        width: .435rem;
+        height: .081rem;
+        border-radius: .036rem;
+        content: "";
+        background-color: #ff4141;
+        transform: translate3d(-50%,0,0);
+        transform-origin: left top;
+        transition: all .3s;
+        transition-timing-function: ease-in-out;
+      }
+    }
   }
 `

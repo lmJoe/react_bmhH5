@@ -1,17 +1,28 @@
 import React,{ PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import { 
-//   AuthorPage,
-//   AuthorHeader
-// } from './style';
+import { 
+  BodyWrapper,
+  TabsWrapper,
+} from '../style';
 import {actionCreators} from '../store';
 class AuthorWapper extends PureComponent {
   render() {
     // console.log(this.props.location.search);
-    const {title,content} = this.props;
+    const {authorTabList} = this.props;
+    console.log("tabsList",authorTabList);
     return (
-      <div>列表</div>
+      <BodyWrapper>
+        <TabsWrapper>
+        {
+          authorTabList.map((item,index) => {
+            return (
+              <li key={index}><span>{item.get('name')}</span></li>
+            )
+          })
+        }
+        </TabsWrapper>
+      </BodyWrapper>
     )
   }
   componentDidMount() {
@@ -24,7 +35,7 @@ const mapDispatch = (dispatch) =>({
   },
 })
 const mapState = (state) => ({
-  
+  authorTabList:state.getIn(['author','authorTabList']),
 })
 //此处withRouter使用意义为让detail有能力获取到withRouter中所有的参数和内容
 export default connect(mapState,mapDispatch)(withRouter(AuthorWapper));
