@@ -14,10 +14,10 @@ export const choseChannel = (data) => ({
   'type':constants.CHOSE_CHANNEL,
   'channelid':data,
 })
-export const getVideo = () => {
+export const getVideo = (channelid) => {
   //此处由于使用了redux-thunk 所以可以返回一个函数，在此函数中写一个异步请求
   return (dispatch) => {
-    getVideoList().then(
+    getVideoList(channelid).then(
       (res) => {
         const data = res.Videolist;
         const action = VideoList(data);

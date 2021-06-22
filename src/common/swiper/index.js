@@ -102,10 +102,7 @@ class SwiperVideo extends PureComponent {
     )
   }
   componentDidMount() {
-    
-  }
-  componentDidMount() {
-    this.props.getVideoList();
+    this.props.getVideoList(this.props.channelid);
     this.props.getChannelList();
     const SwiperDom = ReactDOM.findDOMNode(this);
     //获取视频列表页dom节点
@@ -171,18 +168,23 @@ class SwiperVideo extends PureComponent {
   getAngle = (angx, angy) => {
     return Math.atan2(angy, angx) * 180 / Math.PI;
   };
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.channelid!==this.props.channelid){
+      prevProps.getVideoList(prevProps.channelid);
+    }
   }
 }
 const mapDispatch = (dispatch) =>({
-  getVideoList(){
-    dispatch(actionCreators.getVideo())
+  getVideoList(channelid){
+    dispatch(actionCreators.getVideo(channelid))
   },
   getChannelList(){
     dispatch(actionCreators.getChannel())
   }
+  
 })
 const mapState = (state) => ({
   videoList:state.getIn(['swiper','videoList']),
+  channelid:state.getIn(['swiper','channelid']),
 })
 export default connect(mapState,mapDispatch)(SwiperVideo);

@@ -28,11 +28,6 @@ export const DtailPage = styled.div`
 export const VideoContainer = styled.div`
   width:100%;
   height: 100%;
-  .video{
-    width:100%;
-    height:100%;
-    object-fit: fill;
-  }
 `
 export const VideoPlayerShade = styled.div`
   position: absolute;

@@ -31,22 +31,22 @@ import {
 import '../style.css'
 import {actionCreators} from '../store';
 class Video extends PureComponent {
-  videoPlayBtn() {
-    console.log('this is:', this);
-  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      videoPlayState:true,
+      playComplete:false,
+      videoInfoShow:false,
+    }
+	}
   render() {
     // console.log(this.props.location.search);
-    const {title,videoUrl,videoImg,userid,totaltime,videoPlayBtn} = this.props;
+    const {title,videoUrl,videoImg,userid,totaltime} = this.props;
     const source = 'http://' + videoUrl;
     return (
       <VideoPage>
         <VideoDetail>
           <VideoContainer className="video-container">
-            {/* <video src={videoUrl}  
-              ref={player => {
-                this.player = player;
-              }}
-              className="video" id="video" playsInline="" x5-video-player-type="h5-page" controls="controls" autoPlay="autoPlay"/> */}
             <Player
               id="video"
               ref={player => {
@@ -59,28 +59,35 @@ class Video extends PureComponent {
             <LoadingSpinner />
             </Player>
           </VideoContainer>
-          {/* <VideoPlayerShade onClick ={() => this.videoPlayBtn()}>
-            <ShadeStyle>
-              <img src={videoImg.replace('x', '640_360')} />
-              <PlayBtn></PlayBtn>
-              <VideoPlayBottom>
-                <BottomPlay>14次播放</BottomPlay>
-              </VideoPlayBottom>
-              <BottomBg></BottomBg>
-            </ShadeStyle >
-          </VideoPlayerShade> */}
-          {/* <VideoPlayerPause>
+          {
+            this.state.videoPlayState
+            ? <VideoPlayerShade onClick ={() => this.videoPlayBtn()}>
+              <ShadeStyle>
+                <img src={videoImg.replace('x', '640_360')} />
+                <PlayBtn></PlayBtn>
+                <VideoPlayBottom>
+                  <BottomPlay>14次播放</BottomPlay>
+                </VideoPlayBottom>
+                <BottomBg></BottomBg>
+              </ShadeStyle >
+            </VideoPlayerShade>
+            : ''
+          }
+          {
+            this.state.playComplete
+            ? <VideoPlayerPause>
             <img src={videoImg.replace('x', '640_360')} />
             <VideoPlayerPauseContainer>
               <div>
                 <VideoPlayerPauseText>流畅更高清，打开好看视频</VideoPlayerPauseText>
                 <VideoPlayerPauseBtns>
-                  <Continue>重播</Continue>
+                  <Continue onClick ={() => this.videoPlayBtn()}>重播</Continue>
                   <Open>打开APP</Open>
                 </VideoPlayerPauseBtns>
               </div>
             </VideoPlayerPauseContainer>
-          </VideoPlayerPause> */}
+          </VideoPlayerPause> : ''
+          }
         </VideoDetail>
         <OpenApptop>
           <OpenAppopBanner>
@@ -92,12 +99,18 @@ class Video extends PureComponent {
           <VideoInfotitle>
             {title}
           </VideoInfotitle>
-          <VideoInfoArrow></VideoInfoArrow>
-          <VideoInfoText>
-            <p>发布时间：2021年5月18日</p>
-            <p>本文仅代表作者观点，不代表百度立场</p>
-            <p>本文系作者授权百家号发表，未经许可，不得转载</p>
-          </VideoInfoText>
+          <VideoInfoArrow  ref={(icon)=>{
+              this.spinIcon = icon
+            }} onClick ={() => this.showVideoInfo(this,this.spinIcon)}></VideoInfoArrow>
+          {
+            this.state.videoInfoShow
+            ?<VideoInfoText>
+              <p>发布时间：2021年5月18日</p>
+              <p>本文仅代表作者观点，不代表百度立场</p>
+              <p>本文系作者授权百家号发表，未经许可，不得转载</p>
+            </VideoInfoText>
+            :''
+          }
         </Videoinfo>
         <Gather />
         <Writer />
@@ -119,7 +132,35 @@ class Video extends PureComponent {
   }
   handleStateChange(state, prevState) {
     const { player } = this.player.getState();
-    // console.log(player); //获取视频详细信息
+    if(player.ended==true){
+      this.setState({
+        playComplete:true,
+      })
+      console.log("this.state.playComplete",this.state.playComplete)
+    }
+  }
+  videoPlayBtn(){
+    this.setState({
+      videoPlayState:false,
+      playComplete:false,
+    }, () => {
+      this.play();
+    })
+  }
+  showVideoInfo(state, prevState){
+    this.setState({
+      videoInfoShow:this.state.videoInfoShow==false?true:false
+    },()=>{
+      //根据展开收起调整箭头方向并加样式
+      //取出字符串中的数字
+      let origianAngle = this.spinIcon.style.transform.replace(/[^0-9]/ig,'');
+      if(origianAngle){
+        origianAngle = parseInt(origianAngle,10)
+      }else{
+        origianAngle = 0;
+      }
+      this.spinIcon.style.transform='rotate('+(origianAngle+180)+'deg)'
+    })
   }
   play(){
     this.player.play();
