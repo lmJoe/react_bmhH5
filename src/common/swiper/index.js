@@ -1,4 +1,4 @@
-import React,{ PureComponent } from 'react';
+import React,{ PureComponent,PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {actionCreators} from './store';
 import ReactDOM from 'react-dom';
@@ -10,6 +10,7 @@ import Nav from './components/nav'
 class SwiperVideo extends PureComponent {
   render() {
     const {videoList} = this.props;
+    // console.log(action);
     return (
       <VideoPage className="swiperVideo">
         <Nav />
@@ -110,7 +111,6 @@ class SwiperVideo extends PureComponent {
     SwiperDom.addEventListener("touchstart", function(e){
         startx = e.touches[0].pageX;
         starty = e.touches[0].pageY;
-        
     }, false);
     SwiperDom.addEventListener('touchmove', (e) => {
       var endx, endy;
@@ -123,24 +123,34 @@ class SwiperVideo extends PureComponent {
               break;
           case 1:
               console.log("向上！");
+              
               break;
           case 2:
+              // debugger
               console.log("向下！");
+              // if (document.documentElement.clientHeight < document.documentElement.offsetHeight-4){
+              //   //执行相关脚本。
+              //   console.log("向下！");
+              //   this.props.getVideoList(this.props.channelid);
+              // }
+              
               break;
           case 3:
               console.log("向左！");
-              e.preventDefault();
               break;
           case 4:
               console.log("向右！");
-              e.preventDefault();
               break;
           default:
       }
       
     })
   }
- 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.channelid!==this.props.channelid){
+      prevProps.getVideoList(prevProps.channelid);
+    }
+  }
   //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
   getDirection = (startx, starty, endx, endy)=> {
     var angx = endx - startx;
@@ -168,11 +178,6 @@ class SwiperVideo extends PureComponent {
   getAngle = (angx, angy) => {
     return Math.atan2(angy, angx) * 180 / Math.PI;
   };
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.channelid!==this.props.channelid){
-      prevProps.getVideoList(prevProps.channelid);
-    }
-  }
 }
 const mapDispatch = (dispatch) =>({
   getVideoList(channelid){
@@ -180,11 +185,14 @@ const mapDispatch = (dispatch) =>({
   },
   getChannelList(){
     dispatch(actionCreators.getChannel())
-  }
+  },
   
 })
 const mapState = (state) => ({
   videoList:state.getIn(['swiper','videoList']),
   channelid:state.getIn(['swiper','channelid']),
+  hasMore:state.getIn(['swiper','hasMore']),
+  action:state.getIn(['swiper','action']),
+  index:state.getIn(['swiper','index']),
 })
 export default connect(mapState,mapDispatch)(SwiperVideo);
