@@ -15,7 +15,25 @@ export const NavList = styled.div`
   background:#fff;
 `
 export const NavSwiper = styled.div`
-
+  
+`
+export const VideoMargin = styled.div`
+  height:1.1rem;
+`
+export const RefreshArea = styled.div`
+  text-align:center;
+  color:#bfbfbf;
+  height:1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    width: .8rem;
+    height: .8rem;
+  }
+  span{
+    display:none;
+  }
 `
 export const ChannelItem = styled.div`
   height:1.1rem;
@@ -48,12 +66,14 @@ export const VideoPage = styled.div`
   width: 100%;
   text-align: left;
   background-color: #fff;
-  margin-top:2.2rem;
+  // margin-top:2.2rem;
 `
 export const VideoList = styled.div`
   width: 100%;
   min-height: 16.103rem;
   overflow: hidden;
+  position:relative;
+  // margin-top:-2.2rem;
 `
 export const Video = styled.div`
   text-align: left;
@@ -337,10 +357,9 @@ export const Video = styled.div`
   .video-list-item-tools{
     height: 1.3rem;
     background-color: #f5f5f5;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     padding: .081rem 0;
+    justify-content: space-between;
     .video-list-item-author{
       display: flex;
       height: 100%;

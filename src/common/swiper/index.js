@@ -2,19 +2,43 @@ import React,{ PureComponent,PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {actionCreators} from './store';
 import ReactDOM from 'react-dom';
-import {VideoPage,VideoList,Video} from './style.js';
+import {VideoPage,VideoList,Video,RefreshArea,VideoMargin} from './style.js';
 import { Link } from 'react-router-dom';
 import sayicon from '../../statics/sayicon.png';
 import share from '../../statics/share.png';
+import topMore from '../../statics/topMore.png';
+import loading from '../../statics/loading.svg';
 import Nav from './components/nav'
+import {isTop} from '../../utils/units.js';
 class SwiperVideo extends PureComponent {
   render() {
-    const {videoList} = this.props;
-    // console.log(action);
+    const {videoList,pullState} = this.props;
     return (
       <VideoPage className="swiperVideo">
         <Nav />
-        <VideoList>
+        <VideoMargin></VideoMargin>
+        <VideoList
+          ref={
+            videoListArea => {
+              this.videoListArea = videoListArea;
+            }
+          }
+        >
+          <RefreshArea
+          ref={
+            refreshArea => {
+              this.refreshArea = refreshArea;
+            }
+          }
+          >
+            <img 
+            ref={
+              refreshImg => {
+                this.refreshImg = refreshImg;
+              }
+            }
+            src={topMore} />
+          </RefreshArea>
           {
             videoList.map((item,index)=>{
               return (
@@ -113,6 +137,16 @@ class SwiperVideo extends PureComponent {
         starty = e.touches[0].pageY;
     }, false);
     SwiperDom.addEventListener('touchmove', (e) => {
+      if(isTop() && (e.touches[0].pageY-starty) > 0){
+        const Ydistance = e.touches[0].pageY-starty;
+        if(Ydistance<300){
+          this.videoListArea.style.transform = "translateY("+Ydistance+"px)";
+          this.videoListArea.style.transition = "0.3s ease 0s";
+          
+        }
+      }
+    })
+    SwiperDom.addEventListener('touchend', (e) => {
       var endx, endy;
       endx = e.changedTouches[0].pageX;
       endy = e.changedTouches[0].pageY;
@@ -123,17 +157,21 @@ class SwiperVideo extends PureComponent {
               break;
           case 1:
               console.log("向上！");
-              
               break;
           case 2:
-              // debugger
               console.log("向下！");
-              // if (document.documentElement.clientHeight < document.documentElement.offsetHeight-4){
-              //   //执行相关脚本。
-              //   console.log("向下！");
-              //   this.props.getVideoList(this.props.channelid);
-              // }
-              
+              this.videoListArea.style.transform = "translateY(1.1rem)";
+              this.videoListArea.style.transition = "0.3s ease 0s";
+              this.refreshImg.src=loading;
+              if(isTop()){
+                var that = this;
+                setTimeout(function(){
+                  that.videoListArea.style.transform = "translateY(0)";
+                  that.videoListArea.style.transition = "0.3s ease 0s";
+                  that.refreshImg.src=topMore;
+                  that.props.getVideoList(that.props.channelid);
+                },1500)
+              }
               break;
           case 3:
               console.log("向左！");
@@ -143,7 +181,6 @@ class SwiperVideo extends PureComponent {
               break;
           default:
       }
-      
     })
   }
   componentDidUpdate(prevProps, prevState) {
@@ -158,10 +195,9 @@ class SwiperVideo extends PureComponent {
     var result = 0;
 
     //如果滑动距离太短
-    if (Math.abs(angx) < 2 && Math.abs(angy) < 2) {
+    if (Math.abs(angx) < 5 && Math.abs(angy) < 5) {
         return result;
     }
-
     var angle = this.getAngle(angx, angy);
     if (angle >= -135 && angle <= -45) {
         result = 1;
@@ -186,12 +222,14 @@ const mapDispatch = (dispatch) =>({
   getChannelList(){
     dispatch(actionCreators.getChannel())
   },
-  
+  pullState(boolean){
+    dispatch(actionCreators.pullState(boolean))
+  },
 })
 const mapState = (state) => ({
   videoList:state.getIn(['swiper','videoList']),
   channelid:state.getIn(['swiper','channelid']),
-  hasMore:state.getIn(['swiper','hasMore']),
+  pullState:state.getIn(['swiper','pullState']),
   action:state.getIn(['swiper','action']),
   index:state.getIn(['swiper','index']),
 })

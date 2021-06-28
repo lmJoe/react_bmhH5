@@ -18,7 +18,13 @@ function getRandomNum(minnum, maxnum, n){ //随机数
     return num
   }
 }
+//判断是否已经到达顶部
+function isTop(){
+  var t = document.documentElement.scrollTop||document.body.scrollTop;
+  return t === 0 ? true : false;
+}
 export {
   getRandomArrayElements,
-  getRandomNum
+  getRandomNum,
+  isTop
 }

@@ -6,6 +6,11 @@ const VideoList = (data) => ({
   'type':constants.VIDEO_LIST,
   'videoList':fromJS(data),
 })
+export const pullState = (data) => ({
+  'type':constants.PULL_STATE,
+  'pullState':data,//操作类型
+  'pageIndex':1,//当前页码
+})
 const setChannel = (data) => ({
   'type':constants.CHANNEL_LIST,
   'channel':fromJS(data),

@@ -141,6 +141,17 @@
 	border-radius: 100%;
 	animation: circle .8s infinite linear;
 }
+.refreshArea{
+  /* position:absolute; */
+  /* text-align:center;
+  background:url(../../statics/topMore.png) no-repeat center -0.15rem;
+  background-size:12%;
+  color:#bfbfbf;
+  line-height:2.2rem;
+  height:1.8rem;
+  top:-1.8rem;
+  width:100%; */
+}
 @keyframes circle {
 	100% {
 		transform: rotate(360deg);
