@@ -53,14 +53,14 @@ function getChannelList(){
 /**
  * 获取首页视频列表
  */
-function getVideoList(getVideoList){
+function getVideoList(Channelid,pageIndex){
   //获取当前13位时间戳
   const UnixTime = (new Date()).valueOf();
   const params = {
     dataType:'h5_sensorindex',
     pageSize:16,
-    pageIndex:1,
-    channelId:getVideoList,
+    pageIndex:pageIndex+1,
+    channelId:Channelid,
     distinctid:'',
     jsoncallback:'jsoncallback'+UnixTime,
   }

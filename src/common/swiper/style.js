@@ -20,6 +20,9 @@ export const NavSwiper = styled.div`
 export const VideoMargin = styled.div`
   height:1.1rem;
 `
+export const Loadbottom = styled.div`
+  height:1.1rem;
+`
 export const RefreshArea = styled.div`
   text-align:center;
   color:#bfbfbf;

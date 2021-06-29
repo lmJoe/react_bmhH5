@@ -9,7 +9,12 @@ const VideoList = (data) => ({
 export const pullState = (data) => ({
   'type':constants.PULL_STATE,
   'pullState':data,//操作类型
-  'pageIndex':1,//当前页码
+})
+export const loadState = (params) =>({
+  'type':constants.LOAD_STATE,
+  'isFoot':params.isFoot,//阻止用户频繁上调接口
+  'pageIndex':params.pageIndex,//当前页码
+  'finished':params.finished,//判断视频是否已经加载完
 })
 const setChannel = (data) => ({
   'type':constants.CHANNEL_LIST,
@@ -19,10 +24,10 @@ export const choseChannel = (data) => ({
   'type':constants.CHOSE_CHANNEL,
   'channelid':data,
 })
-export const getVideo = (channelid) => {
+export const getVideo = (channelid,pageIndex) => {
   //此处由于使用了redux-thunk 所以可以返回一个函数，在此函数中写一个异步请求
   return (dispatch) => {
-    getVideoList(channelid).then(
+    getVideoList(channelid,pageIndex).then(
       (res) => {
         const data = res.Videolist;
         const action = VideoList(data);
