@@ -1,4 +1,4 @@
-import React,{ PureComponent,PropTypes } from 'react';
+import React,{ PureComponent,Suspense,lazy } from 'react';
 import { connect } from 'react-redux';
 import {actionCreators} from './store';
 import ReactDOM from 'react-dom';
@@ -11,9 +11,25 @@ import loading from '../../statics/loading.svg';
 import Nav from './components/nav'
 import {isTop} from '../../utils/units.js';
 class SwiperVideo extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+        finished: false,//是否全部加载完毕
+        isFoot: true,   //阻止用户频繁上拉调接口
+    }
+  }
   render() {
-    const {videoList,pullState,finished} = this.props;
-    console.log(videoList);
+    const {videoList} = this.props;
+    const {finished} = this.state;
+    if(videoList.length > 0){
+      this.setState({
+        isFoot: true,
+      });
+    }else if(videoList.length == 0){
+      this.setState({
+        finished: true,
+      });
+    }
     return (
       <VideoPage className="swiperVideo"
         ref={
@@ -131,7 +147,7 @@ class SwiperVideo extends PureComponent {
             }):''
           }
           {
-            finished?<Loadbottom>正在加载</Loadbottom>:<Loadbottom>已没有更多视频</Loadbottom>
+            finished?<Loadbottom>已没有更多视频</Loadbottom>:<Loadbottom><img src={loading} /></Loadbottom>
           }
           
         </VideoList>
@@ -139,7 +155,12 @@ class SwiperVideo extends PureComponent {
     )
   }
   componentDidMount() {
-    this.props.getVideoList(this.props.channelid,this.props.pageIndex);
+    const params = {
+      channelid:this.props.channelid,
+      pageIndex:this.props.pageIndex,
+      getVideoType:'pullget',
+    }
+    this.props.getVideoList(params);
     this.props.getChannelList();
     const SwiperDom = ReactDOM.findDOMNode(this);
     //获取视频列表页dom节点
@@ -154,7 +175,6 @@ class SwiperVideo extends PureComponent {
         if(Ydistance<300){
           this.videoListArea.style.transform = "translateY("+Ydistance+"px)";
           this.videoListArea.style.transition = "0.3s ease 0s";
-          
         }
       }
     })
@@ -176,19 +196,33 @@ class SwiperVideo extends PureComponent {
               this.videoListArea.style.transform = "translateY(1.1rem)";
               this.videoListArea.style.transition = "0.3s ease 0s";
               this.refreshImg.src=loading;
-
               if(isTop()){
                 var that = this;
                 setTimeout(function(){
                   that.videoListArea.style.transform = "translateY(0)";
                   that.videoListArea.style.transition = "0.3s ease 0s";
                   that.refreshImg.src=topMore;
-                  that.props.getVideoList(that.props.channelid,1);
+                  const params = {
+                    channelid:that.props.channelid,
+                    pageIndex:1,
+                    getVideoType:'pullget',
+                  }
+                  that.props.getVideoList(params);
                 },1500)
               }
               break;
           case 3:
               console.log("向左！");
+              const channelList = this.props.channelList;
+              console.log("频道id",channelList);
+              channelList.map((item,index)=>{
+                if(this.props.channelid==item.get('id')){
+                  //获取到当前频道id的下一个
+                  debugger
+                  console.log("获取到了",item.get('id'));
+                }
+              })
+              //获取当前频道id
               break;
           case 4:
               console.log("向右！");
@@ -199,7 +233,12 @@ class SwiperVideo extends PureComponent {
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.channelid!==this.props.channelid){
-      prevProps.getVideoList(prevProps.channelid,this.props.pageIndex);
+      const params = {
+        channelid:prevProps.channelid,
+        pageIndex:1,
+        getVideoType:'channelidGet',
+      }
+      prevProps.getVideoList(params);
     }
   }
   //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
@@ -229,50 +268,27 @@ class SwiperVideo extends PureComponent {
     return Math.atan2(angy, angx) * 180 / Math.PI;
   };
   loadData(){
-    console.log("数据的高-------------------------", this.onPullUp.clientHeight);
-    console.log("滚动的高------------------------", document.documentElement.scrollTop);
-    console.log("滚动的高------------------------", document.body.scrollTop);
-    console.log("屏幕的高------------------------", document.documentElement.clientHeight);
     let dataHeight = this.onPullUp.clientHeight;
     let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop;
     let screenHeight = document.documentElement.clientHeight;
     const h = 10;//自定义距离底部多少时concat数据
-    debugger
-    if (dataHeight - scrollHeight - h < screenHeight && this.props.isFoot) {
+    if (dataHeight - scrollHeight - h < screenHeight && this.state.isFoot) {
         const pageIndex = this.props.pageIndex;
         const params = {
-          isFoot:false,
-          pageIndex:pageIndex,
-          finished:false,
+          channelid:this.props.channelid,
+          pageIndex:pageIndex+1,
+          getVideoType:'loaddingGet',
         }
-        this.props.loadState(params)
-        this.props.getVideoList(this.props.channelid,pageIndex);
-        // meActs.getRecentReadList(this.accessKey, this.accessID, params).then((res) => {
-        //     if (res.data.code === 10000 && res.data.data.list.length > 0) {
-        //         this.setState({
-        //             isFoot: true,
-        //         });
-        //         this._page++;
-        //     }
-        //     //数据加载完毕
-        //     if (res.data.code === 10000 && res.data.data.list.length == 0) {
-        //         this.setState({
-        //             finished: true,
-        //         })
-        //     }
-        // });
+        this.props.getVideoList(params);
     }
   }
 }
 const mapDispatch = (dispatch) =>({
-  getVideoList(channelid,pageIndex){
-    dispatch(actionCreators.getVideo(channelid,pageIndex))
+  getVideoList(params){
+    dispatch(actionCreators.getVideo(params))
   },
   getChannelList(){
     dispatch(actionCreators.getChannel())
-  },
-  pullState(boolean){
-    dispatch(actionCreators.pullState(boolean))
   },
   loadState(params){
     dispatch(actionCreators.loadState(params))
@@ -281,9 +297,8 @@ const mapDispatch = (dispatch) =>({
 const mapState = (state) => ({
   videoList:state.getIn(['swiper','videoList']),
   channelid:state.getIn(['swiper','channelid']),
-  pullState:state.getIn(['swiper','pullState']),
   action:state.getIn(['swiper','action']),
   pageIndex:state.getIn(['swiper','pageIndex']),
-  isFoot:state.getIn(['swiper','isFoot']),
+  channelList:state.getIn(['swiper','channelList']),
 })
 export default connect(mapState,mapDispatch)(SwiperVideo);

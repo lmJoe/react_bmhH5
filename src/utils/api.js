@@ -53,14 +53,14 @@ function getChannelList(){
 /**
  * 获取首页视频列表
  */
-function getVideoList(Channelid,pageIndex){
+function getVideoList(params){
   //获取当前13位时间戳
   const UnixTime = (new Date()).valueOf();
-  const params = {
+  const paramsData = {
     dataType:'h5_sensorindex',
     pageSize:16,
-    pageIndex:pageIndex+1,
-    channelId:Channelid,
+    pageIndex:params.pageIndex,
+    channelId:params.channelid,
     distinctid:'',
     jsoncallback:'jsoncallback'+UnixTime,
   }
@@ -68,7 +68,7 @@ function getVideoList(Channelid,pageIndex){
     jsonp({
       url: '//interface.video.baomihua.com/index.ashx',
       type: 'GET',
-      data:params,
+      data:paramsData,
       timeout: 30000,
       dataType: "jsonp",
       jsonp:'jsoncallback',

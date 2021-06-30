@@ -21,7 +21,16 @@ export const VideoMargin = styled.div`
   height:1.1rem;
 `
 export const Loadbottom = styled.div`
-  height:1.1rem;
+  height:1.5rem;
+  text-align:center;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  color:#888;
+  img{
+    width:8%;
+    margin:0 auto;
+  }
 `
 export const RefreshArea = styled.div`
   text-align:center;
