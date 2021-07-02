@@ -14,8 +14,8 @@ class SwiperVideo extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-        finished: false,//是否全部加载完毕
-        isFoot: true,   //阻止用户频繁上拉调接口
+      finished: false,//是否全部加载完毕
+      isFoot: true,   //阻止用户频繁上拉调接口
     }
   }
   render() {
@@ -183,6 +183,7 @@ class SwiperVideo extends PureComponent {
       endx = e.changedTouches[0].pageX;
       endy = e.changedTouches[0].pageY;
       var direction = this.getDirection(startx, starty, endx, endy);
+      var channelList = this.props.channelList.toJS();
       switch (direction) {
           case 0:
               console.log("未滑动！");
@@ -213,19 +214,19 @@ class SwiperVideo extends PureComponent {
               break;
           case 3:
               console.log("向左！");
-              const channelList = this.props.channelList;
-              console.log("频道id",channelList);
-              channelList.map((item,index)=>{
-                if(this.props.channelid==item.get('id')){
-                  //获取到当前频道id的下一个
-                  debugger
-                  console.log("获取到了",item.get('id'));
+              for(let i=0;i<channelList.length;i++){
+                if(channelList[i].id == this.props.channelid){
+                  this.props.choseChannel(channelList[i+1].id);
                 }
-              })
-              //获取当前频道id
+              }
               break;
           case 4:
               console.log("向右！");
+              for(let i=0;i<channelList.length;i++){
+                if(channelList[i].id == this.props.channelid){
+                  this.props.choseChannel(channelList[i-1].id);
+                }
+              }
               break;
           default:
       }
@@ -293,6 +294,9 @@ const mapDispatch = (dispatch) =>({
   loadState(params){
     dispatch(actionCreators.loadState(params))
   },
+  choseChannel(id){
+    dispatch(actionCreators.choseChannel(id));
+  }
 })
 const mapState = (state) => ({
   videoList:state.getIn(['swiper','videoList']),
