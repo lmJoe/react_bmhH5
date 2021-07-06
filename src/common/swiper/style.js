@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import playicon from '../../statics/playicon.png';
 import Vlog from '../../statics/Vlog.png';
-import videoBg from '../../statics/videoBg.jpg';
+import videoBg from '../../statics/videoBg.png';
 import playNum from '../../statics/playNum.png';
 export const NavList = styled.div`
   width:100%;
@@ -126,7 +126,7 @@ export const Video = styled.div`
             background-image: url(${videoBg});
             background-repeat: no-repeat;
             background-position: 50%;
-            background-size: 100%;
+            background-size: 65%;
           }
         }
         .video-list-item-status{

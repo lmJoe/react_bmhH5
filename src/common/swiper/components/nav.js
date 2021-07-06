@@ -13,7 +13,7 @@ class Nav extends PureComponent {
         {
         channelList.map((item,index) => {
             return (
-              <ChannelItem key={item.get('id')} className="swiper-slide" onClick ={() => choseChannel(item.get('id'))}>
+              <ChannelItem key={item.get('id')} className="swiper-slide" onClick ={() => choseChannel(item.get('id'))} data-hash={item.get('id')}>
                 <span className={channelid==item.get('id')?'tabsCurrent':''}>{item.get('channel')}</span>
               </ChannelItem>
             )
@@ -38,8 +38,9 @@ class Nav extends PureComponent {
         observeParents: true,//修改swiper的父元素时，自动初始化swiper  重要
         freeMode : true,
         freeModeMomentumBounceRatio : 1,
+        hashNavigation: true,
+        
     })
-
   }
 }
 const mapDispatch = (dispatch) => ({

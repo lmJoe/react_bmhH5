@@ -21,11 +21,7 @@ class SwiperVideo extends PureComponent {
   render() {
     const {videoList} = this.props;
     const {finished} = this.state;
-    if(videoList.length > 0){
-      this.setState({
-        isFoot: true,
-      });
-    }else if(videoList.length == 0){
+    if(videoList.size == 0){
       this.setState({
         finished: true,
       });
@@ -162,19 +158,24 @@ class SwiperVideo extends PureComponent {
     }
     this.props.getVideoList(params);
     this.props.getChannelList();
-    const SwiperDom = ReactDOM.findDOMNode(this);
+    // const SwiperDom = ReactDOM.findDOMNode(this);
+    const SwiperDom = this.videoListArea;
     //获取视频列表页dom节点
     let startx, starty;
+    let that = this;
     SwiperDom.addEventListener("touchstart", function(e){
         startx = e.touches[0].pageX;
         starty = e.touches[0].pageY;
+        that.setState({
+          isFoot: true,
+        });
     }, false);
     SwiperDom.addEventListener('touchmove', (e) => {
       if(isTop() && (e.touches[0].pageY-starty) > 0){
         const Ydistance = e.touches[0].pageY-starty;
         if(Ydistance<300){
-          this.videoListArea.style.transform = "translateY("+Ydistance+"px)";
-          this.videoListArea.style.transition = "0.3s ease 0s";
+          SwiperDom.style.transform = "translateY("+Ydistance+"px)";
+          SwiperDom.style.transition = "0.3s ease 0s";
         }
       }
     })
@@ -194,8 +195,8 @@ class SwiperVideo extends PureComponent {
               break;
           case 2:
               console.log("向下！");
-              this.videoListArea.style.transform = "translateY(1.1rem)";
-              this.videoListArea.style.transition = "0.3s ease 0s";
+              SwiperDom.style.transform = "translateY(1.1rem)";
+              SwiperDom.style.transition = "0.3s ease 0s";
               this.refreshImg.src=loading;
               if(isTop()){
                 var that = this;
@@ -215,16 +216,22 @@ class SwiperVideo extends PureComponent {
           case 3:
               console.log("向左！");
               for(let i=0;i<channelList.length;i++){
-                if(channelList[i].id == this.props.channelid){
+                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)){
                   this.props.choseChannel(channelList[i+1].id);
+                  this.setState({
+                    isFoot: false,
+                  });
                 }
               }
               break;
           case 4:
               console.log("向右！");
               for(let i=0;i<channelList.length;i++){
-                if(channelList[i].id == this.props.channelid){
+                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)){
                   this.props.choseChannel(channelList[i-1].id);
+                  this.setState({
+                    isFoot: false,
+                  });
                 }
               }
               break;
@@ -232,7 +239,7 @@ class SwiperVideo extends PureComponent {
       }
     })
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {;
     if(prevProps.channelid!==this.props.channelid){
       const params = {
         channelid:prevProps.channelid,
@@ -242,6 +249,19 @@ class SwiperVideo extends PureComponent {
       prevProps.getVideoList(params);
     }
   }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   debugger
+  //   //isFoot为true则开启防止持续调用接口
+  //   if(!prevState.isFoot) {
+  //     console.log("nextProps.channelid",nextProps.channelid)
+  //     nextProps.getVideoList(nextProps.channelid);
+  //     return {
+  //       isFoot:false,
+  //     }
+  //   }
+  //   // 否则，对于state不进行任何操作
+  //   return null;
+  // }
   //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
   getDirection = (startx, starty, endx, endy)=> {
     var angx = endx - startx;
