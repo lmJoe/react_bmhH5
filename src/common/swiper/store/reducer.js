@@ -7,6 +7,7 @@ const videodefaultState = fromJS({
   channelList:[],
   channelid:100,//设置默认频道id
   pageIndex:1,//当前页码
+  direction:'',
 })
 const addVideoList = (state,action) => {
   return state.merge({
@@ -33,6 +34,7 @@ export default ( state = videodefaultState, action ) => {//此处的defaultState
     case constants.CHOSE_CHANNEL:
       return state.merge({
         channelid:fromJS(action.channelid),
+        direction:fromJS(action.direction),
       })
     default:
       return state;

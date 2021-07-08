@@ -14,7 +14,8 @@ const setChannel = (data) => ({
 })
 export const choseChannel = (data) => ({
   'type':constants.CHOSE_CHANNEL,
-  'channelid':data,
+  'channelid':data.channelid,
+  'direction':data.direction,
 })
 export const getVideo = (params) => {
   //此处由于使用了redux-thunk 所以可以返回一个函数，在此函数中写一个异步请求

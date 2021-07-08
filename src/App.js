@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import { Provider } from 'react-redux';
-import { BrowserRouter,Route } from 'react-router-dom'
+import { BrowserRouter,Route,Redirect,Switch } from 'react-router-dom'
 import Header from './common/header/index.js'
 import Swiper from './common/swiper/index.js'
 // import Detail from './pages/loadable.js'//隐藏是由于打包后跳转页面出错
@@ -12,7 +12,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter basename="liming2">
         <Header />
-        <Route path='/' exact component={Swiper}></Route>
+        <Route path='/welcome' component={Swiper} exact></Route>
         <Route path='/detail/:id' exact component={Detail}></Route>
         <Route path='/author/:id' exact component={Author}></Route>
       </BrowserRouter>

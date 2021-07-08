@@ -23,8 +23,15 @@ function isTop(){
   var t = document.documentElement.scrollTop||document.body.scrollTop;
   return t === 0 ? true : false;
 }
+//截取字符串中某个字符后面所有内容
+function getCaption(obj){
+  var index=obj.lastIndexOf("\#");
+  obj=obj.substring(index+1,obj.length);
+  return obj;
+}
 export {
   getRandomArrayElements,
   getRandomNum,
-  isTop
+  isTop,
+  getCaption
 }

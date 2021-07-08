@@ -216,22 +216,32 @@ class SwiperVideo extends PureComponent {
           case 3:
               console.log("向左！");
               for(let i=0;i<channelList.length;i++){
-                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)){
-                  this.props.choseChannel(channelList[i+1].id);
+                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)&&(i<channelList.length-1)){
+                  const params = {
+                    channelid:channelList[i+1].id,
+                    direction:'next',
+                  }
+                  this.props.choseChannel(params);
                   this.setState({
                     isFoot: false,
                   });
+                  // this.props.history.push('/welcome#'+channelList[i+1].id)
                 }
               }
               break;
           case 4:
               console.log("向右！");
               for(let i=0;i<channelList.length;i++){
-                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)){
-                  this.props.choseChannel(channelList[i-1].id);
+                if((channelList[i].id == this.props.channelid)&&(this.state.isFoot)&&(i>0)){
+                  const params = {
+                    channelid:channelList[i-1].id,
+                    direction:'prev',
+                  }
+                  this.props.choseChannel(params);
                   this.setState({
                     isFoot: false,
                   });
+                  // this.props.history.push('/welcome#'+channelList[i-1].id)
                 }
               }
               break;
@@ -314,8 +324,8 @@ const mapDispatch = (dispatch) =>({
   loadState(params){
     dispatch(actionCreators.loadState(params))
   },
-  choseChannel(id){
-    dispatch(actionCreators.choseChannel(id));
+  choseChannel(params){
+    dispatch(actionCreators.choseChannel(params));
   }
 })
 const mapState = (state) => ({
