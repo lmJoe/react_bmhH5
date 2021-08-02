@@ -196,13 +196,13 @@ class SwiperVideo extends PureComponent {
           case 2:
               console.log("向下！");
               SwiperDom.style.transform = "translateY(1.1rem)";
-              SwiperDom.style.transition = "0.3s ease 0s";
+              SwiperDom.style.transition = "0.1s ease 0.1s";
               this.refreshImg.src=loading;
               if(isTop()){
                 var that = this;
                 setTimeout(function(){
                   that.videoListArea.style.transform = "translateY(0)";
-                  that.videoListArea.style.transition = "0.3s ease 0s";
+                  that.videoListArea.style.transition = "0.1s ease 0.1s";
                   that.refreshImg.src=topMore;
                   const params = {
                     channelid:that.props.channelid,
@@ -249,7 +249,7 @@ class SwiperVideo extends PureComponent {
       }
     })
   }
-  componentDidUpdate(prevProps, prevState) {;
+  componentDidUpdate(prevProps, prevState) {
     if(prevProps.channelid!==this.props.channelid){
       const params = {
         channelid:prevProps.channelid,

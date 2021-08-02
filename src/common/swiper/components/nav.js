@@ -34,6 +34,7 @@ class Nav extends PureComponent {
     }else if(nextProps.direction=='prev'){
       this.swiperObj.slidePrev();
     }
+    // this.props.history.push('/welcome#'+nextProps.channelid);
   }
   instanceSwiper() {
     this.swiperObj = new Swiper('.NavSwiper', {
